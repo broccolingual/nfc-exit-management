@@ -23,6 +23,10 @@ def sendNotify(content: str):
         return r
 
 def main(args):
+    if not os.path.isfile("tags.json"):
+        with open("tags.json", "w") as f:
+            json.dump([], f)
+
     while True:
         with nfc.ContactlessFrontend(NFC_READER_ID) as clf:
             tag = clf.connect(rdwr={"on-connect": lambda tag: False})
@@ -51,7 +55,7 @@ def main(args):
             with open("tags.json", "w") as f:
                 json.dump(json_data, f)
 
-            time.sleep(1) 
+            time.sleep(3) 
 
 if __name__ == "__main__":
     main(sys.argv)
